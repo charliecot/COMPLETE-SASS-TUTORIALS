@@ -1,0 +1,40 @@
+@use "sass:map";
+$breaks:(
+    "xs":100px,
+    "sm":480px,
+    "md":760px,
+    "lg":960px,
+    "xl":1200px
+);
+
+
+@mixin xs {
+@media (min-width:map.get($breaks,"xs")){
+    @content;
+
+}
+}
+@mixin sm {
+@media (min-width:map.get($breaks,"sm")){
+    @content;
+
+}
+}
+@mixin md {
+@media (min-width:map.get($breaks,"md")){
+    @content;
+
+}
+}
+@mixin lg {
+@media (min-width:map.get($breaks,"lg")){
+    @content;
+
+}
+}
+@mixin xl {
+@media (min-width:map.get($breaks,"xl")){
+    @content;
+
+}
+}

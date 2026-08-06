@@ -1,0 +1,141 @@
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:color';
+@use 'breakpoints';
+//@use 'breakpoints' as *;
+
+@import url(https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic);
+
+
+
+$colors: (
+  primary: rgb(7, 11, 239),
+  secondary: rgb(1, 56, 1)
+);
+
+body {
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  font-family: Poppins;
+
+  @include breakpoints.lg{
+  background-color: aqua; 
+  }
+
+  @include breakpoints.md{
+    background-color: rgb(220, 133, 20);
+  }
+
+}
+
+h1 {
+  a {
+    color: map.get($colors, secondary);
+    text-decoration: none;
+  }
+}
+/* @debug  map.has-key($colors,primary);
+@debug map.get($colors, secondary); */
+
+
+//helps to generate colors for text and background
+@each $key,$value in $colors{
+    .text-#{$key}{
+        color: $value;
+    }
+    
+
+    .text-hover-#{$key}{
+        &:hover{
+            color: $value;
+        }
+    }
+    .bg-#{$key}{
+        background-color: $value;
+
+    }
+@if($value != black and $value !=white){
+    //to generate light variations
+     @for $i from 1 through 9{
+    .text-#{$key}-light-#{$i}{
+        color: color.mix(white,$value,$i*10%);
+    }
+    .bg-#{$key}-light-#{$i}{
+        background-color: color.mix(white,$value,$i*10%);
+    }
+    }
+    //to generate dark variations
+    @for $i from 1 through 9{
+    .text-#{$key}-dark-#{$i}{
+        color: color.mix(black,$value,$i*10%);
+    }
+    .bg-#{$key}-dark-#{$i}{
+        background-color: color.mix(black,$value,$i*10%);
+    }
+    }
+
+
+}
+    
+   
+   
+}
+
+ @if(1<5){
+     .test-if{
+        color: orangered;
+     }   
+}@else{
+   .test-if{
+        color:royalblue;
+     }   
+}
+
+
+$base-padding:1rem;
+
+//to generate utilities classes (padding)
+$utilities:(
+    "padding":(
+        "prefix":"p",
+        "values":(
+            "0":0,
+            "1":$base-padding ,
+            "2":$base-padding *2,
+            "3":$base-padding *4,
+            "4":$base-padding *6,
+            "5":$base-padding *8,
+        )
+    ),
+    "padding-left":(
+        "prefix":"pl",
+        "values":(
+            "0":0,
+            "1":$base-padding ,
+            "2":$base-padding *2,
+            "3":$base-padding *4,
+            "4":$base-padding *6,
+            "5":$base-padding *8,
+        )
+    ),
+
+   
+);
+//generating  utility classes
+@each $property,$map in $utilities{
+    $prefix:map.get($map,"prefix");
+    $values:map.get($map,"values");
+
+    @each $k, $v in $values{
+        @if($k == "default"){
+            .#{$prefix}{
+                #{$property}:$v;
+            } }@else{
+                .#{$prefix}-#{$k}{
+                 #{$property}:$v;
+                }
+            }
+
+        }
+    }
